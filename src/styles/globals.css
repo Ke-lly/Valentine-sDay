@@ -1,43 +1,205 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+/* styles/globals.css */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap)');
 
+/* ═══════════════════════════════════════════
+   VARIÁVEIS CSS — DESIGN TOKENS
+═══════════════════════════════════════════ */
 :root {
-  --font-serif: 'Playfair Display', serif;
-  --font-script: 'Pinyon Script', cursive;
-  --font-cinzel: 'Cinzel', serif;
+  /* Cores base */
+  --ink-black: #0A0806;
+  --parchment-base: #F5E6D3;
+  --parchment-dark: #D4B896;
+  --parchment-shadow: #B89B7A;
+  --sepia-warm: #8B6914;
+  --gold-ancient: #C9A84C;
+  --gold-bright: #FFD066;
+  --gold-glow: rgba(255, 208, 102, 0.4);
+  --wax-red: #8B1A1A;
+  --ink-blue: #1A237E;
+
+  /* Cores por mood */
+  --mood-candlelit: #1A1005;
+  --mood-amber: #2A1A05;
+  --mood-rose: #1A0A0F;
+  --mood-golden: #1A1500;
+  --mood-parchment: #0F0A05;
+  --mood-violet: #0F0A1A;
+  --mood-indigo: #050510;
+  --mood-cosmos: #020208;
+  --mood-luminous: #0A0A15;
+
+  /* Tipografia */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-stats: 'Space Grotesk', system-ui, sans-serif;
+
+  /* Espaçamento narrativo */
+  --space-breath: clamp(2rem, 5vw, 5rem);
+  --space-section: clamp(4rem, 10vw, 10rem);
+
+  /* Transições */
+  --transition-slow: 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-medium: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.3s ease-out;
+
+  /* Z-index layers */
+  --z-background: 0;
+  --z-particles: 1;
+  --z-content: 10;
+  --z-overlay: 20;
+  --z-modal: 30;
+  --z-audio: 40;
+}
+
+/* ═══════════════════════════════════════════
+   RESET E BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: #0c0f12;
-  color: #F5EFE6;
+  background: var(--ink-black);
+  color: var(--parchment-base);
+  font-family: var(--font-body);
   overflow-x: hidden;
-  font-family: var(--font-serif);
+  min-height: 100dvh;
 }
 
-/* Textura de papel envelhecido realista */
-.parchment-texture {
-  background-color: #f5efe6;
-  background-image: 
-    radial-gradient(circle at 50% 50%, transparent 60%, rgba(139, 115, 85, 0.15) 100%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-  box-shadow: inset 0 0 60px rgba(92, 64, 31, 0.2), 0 20px 50px rgba(0,0,0,0.5);
+/* Ocultar scrollbar mas manter funcionalidade */
+body::-webkit-scrollbar { width: 0; }
+
+/* ═══════════════════════════════════════════
+   TEXTURA DE PAPEL
+═══════════════════════════════════════════ */
+.paper-texture {
+  position: relative;
+  background-color: var(--parchment-base);
+  color: #3A2A1A;
 }
 
-/* Custom Scrollbar Oculto para Imersão Cinematográfica */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #0c0f12;
-}
-::-webkit-scrollbar-thumb {
-  background: #D4AF37;
-  border-radius: 2px;
+.paper-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='[w3.org](http://www.w3.org/2000/svg)'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.4;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  z-index: 1;
 }
 
-.font-cinzel {
-  font-family: var(--font-cinzel);
+/* Vignetagem */
+.vignette::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  pointer-events: none;
+  z-index: var(--z-overlay);
+}
+
+/* ═══════════════════════════════════════════
+   GRAIN CINEMATOGRÁFICO
+═══════════════════════════════════════════ */
+.film-grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url('/textures/grain.png');
+  background-size: 256px 256px;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  animation: grainShift 0.12s steps(1) infinite;
+}
+
+@keyframes grainShift {
+  0%  { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -3%); }
+  50% { transform: translate(3%, 1%); }
+  75% { transform: translate(-1%, 3%); }
+  100%{ transform: translate(2%, -1%); }
+}
+
+/* ═══════════════════════════════════════════
+   TIPOGRAFIA
+═══════════════════════════════════════════ */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-narrative {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+.text-script {
+  font-family: var(--font-script);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.text-stats {
+  font-family: var(--font-stats);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+/* Gold text effect */
+.text-gold {
+  color: transparent;
+  background: linear-gradient(135deg, #C9A84C 0%, #FFD066 50%, #C9A84C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════════
+   KEYFRAMES BASE
+═══════════════════════════════════════════ */
+@keyframes candleFlicker {
+  0%, 100% { opacity: 1; transform: scaleY(1) scaleX(1); }
+  25% { opacity: 0.95; transform: scaleY(1.02) scaleX(0.98); }
+  50% { opacity: 0.97; transform: scaleY(0.98) scaleX(1.01); }
+  75% { opacity: 0.93; transform: scaleY(1.03) scaleX(0.99); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(0.5deg); }
+  66% { transform: translateY(-4px) rotate(-0.5deg); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px var(--gold-glow); }
+  50% { box-shadow: 0 0 40px var(--gold-glow), 0 0 60px var(--gold-glow); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
 }

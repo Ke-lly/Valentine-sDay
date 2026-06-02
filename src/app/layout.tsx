@@ -1,16 +1,20 @@
-import '@/styles/globals.css';
+// app/layout.tsx
+import type { Metadata } from "next"
+import "@/styles/globals.css"
+import { StoryProvider } from "@/context/StoryContext"
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const metadata: Metadata = {
+  title: "Para Gustavo",
+  description: "Uma história escrita para você.",
+  robots: { index: false, follow: false }, // experiência privada
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-      </head>
-      <body>{children}</body>
+      <body>
+        <StoryProvider>{children}</StoryProvider>
+      </body>
     </html>
-  );
+  )
 }

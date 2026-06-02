@@ -1,10 +1,6 @@
-import StoryController from '@/components/StoryController';
+// app/page.tsx
+import { Experience } from "@/components/Experience"
 
-export const metadata = {
-  title: 'Para Gustavo, Com Todo Meu Amor',
-  description: 'Uma jornada imersiva através da nossa história.',
-};
-
-export default function Page() {
-  return <StoryController />;
+export default function Home() {
+  return <Experience />
 }
